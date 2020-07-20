@@ -1,6 +1,7 @@
 import webbrowser
 import time
-import tkinter as tk
+from tkinter import *
+from tkinter.ttk import *
 import tkinter.messagebox
 from urllib.parse import quote
 import string
@@ -10,15 +11,15 @@ from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 import smtplib
 
-window = tk.Tk()
+window = Tk()
 window.title('查询工具')
 window.geometry('500x110')
-a = tk.Label(window, text='请先登录！')
+a = Label(window, text='请先登录！')
 a.pack()
-el1 = tk.Label(window, text='用户名：', )
-el2 = tk.Label(window, text='密码：', )
-e1 = tk.Entry(window, font=('Arial', 14))
-e2 = tk.Entry(window, show='*', font='Arial')
+el1 = Label(window, text='用户名：', )
+el2 = Label(window, text='密码：', )
+e1 = Entry(window)
+e2 = Entry(window, show='*')
 login = False
 
 
@@ -51,7 +52,7 @@ def forgot(email, email_test):
     server.login(from_addr, password)
     server.sendmail(from_addr, to_addr, msg.as_string())
     server.quit()
-    tk.messagebox.showinfo('', '验证码已发送！')
+    tkinter.messagebox.showinfo('', '验证码已发送！')
 
 
 def generate():
@@ -62,7 +63,7 @@ def generate():
 
 
 def send():
-    window_forgot = tk.Toplevel(window)
+    window_forgot = Toplevel(window)
     window_forgot.geometry('300x50')
     window_forgot.title('忘记密码')
 
@@ -73,7 +74,7 @@ def send():
         for email in user.values():
             emails.append(email[1])
         if em1.get() not in emails:
-            tk.messagebox.showerror('警告⚠️', '此邮箱未注册！')
+            tkinter.messagebox.showerror('警告⚠️', '此邮箱未注册！')
         else:
             def _format_addr(s):
                 name, addr = parseaddr(s)
@@ -94,12 +95,12 @@ def send():
             server.login(from_addr, password)
             server.sendmail(from_addr, to_addr, msg.as_string())
             server.quit()
-            tk.messagebox.showinfo('', '您的密码已发送到您的邮箱中！')
+            tkinter.messagebox.showinfo('', '您的密码已发送到您的邮箱中！')
             window_forgot.destroy()
 
-    em = tk.Label(window_forgot, text='邮箱：', )
-    em1 = tk.Entry(window_forgot, font='Arial')
-    emts = tk.Button(window_forgot, text='获取', command=confirm, font='Arial')
+    em = Label(window_forgot, text='邮箱：', )
+    em1 = Entry(window_forgot)
+    emts = Button(window_forgot, text='获取', command=confirm)
     em.place(x=33, y=15)
     em1.place(x=75, y=15)
     emts.place(x=250, y=20)
@@ -109,7 +110,7 @@ def log():
     global login
     user = find_record()
     if e1.get() in user.keys() and e2.get() == user[e1.get()][0]:
-        tk.messagebox.showinfo('', '登录成功！')
+        tkinter.messagebox.showinfo('', '登录成功！')
         login = True
         if login is True:
             a.pack_forget()
@@ -122,7 +123,7 @@ def log():
             forget.place_forget()
             search()
     else:
-        tk.messagebox.showerror('警告⚠️', '️登录失败，请检查用户名或密码是否正确！')
+        tkinter.messagebox.showerror('警告⚠️', '️登录失败，请检查用户名或密码是否正确！')
         login = False
 
 
@@ -135,27 +136,27 @@ def sign_up():
         for email in user.values():
             emails.append(email[1])
         if u1.get() in user.keys():
-            tk.messagebox.showerror('警告⚠️', '️此用户名已存在！')
+            tkinter.messagebox.showerror('警告⚠️', '️此用户名已存在！')
         elif '+' in u1.get():
-            tk.messagebox.showerror('警告⚠️', '️用户名不能包含加号！')
+            tkinter.messagebox.showerror('警告⚠️', '️用户名不能包含加号！')
         elif '+' in p1.get():
-            tk.messagebox.showerror('警告⚠️', '️密码不能包含加号！')
+            tkinter.messagebox.showerror('警告⚠️', '️密码不能包含加号！')
         elif p1.get() != cp1.get():
-            tk.messagebox.showerror('警告⚠️', '️请输入正确的密码！')
+            tkinter.messagebox.showerror('警告⚠️', '️请输入正确的密码！')
         elif u1.get() is '':
-            tk.messagebox.showerror('警告⚠️', '用户名不能为空！')
+            tkinter.messagebox.showerror('警告⚠️', '用户名不能为空！')
         elif p1.get() is '':
-            tk.messagebox.showerror('警告⚠️', '密码不能为空！')
+            tkinter.messagebox.showerror('警告⚠️', '密码不能为空！')
         elif em1.get() is '':
-            tk.messagebox.showerror('警告⚠️', '邮箱不能为空！')
+            tkinter.messagebox.showerror('警告⚠️', '邮箱不能为空！')
         elif em1.get() in emails:
-            tk.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
+            tkinter.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
         elif '@' not in em1.get() or '.' not in em1.get():
-            tk.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
+            tkinter.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
         elif et1.get() != email_test:
-            tk.messagebox.showerror('警告⚠️', '请输入正确的验证码！')
+            tkinter.messagebox.showerror('警告⚠️', '请输入正确的验证码！')
         else:
-            tk.messagebox.showinfo('', '注册成功！请您重新登录！')
+            tkinter.messagebox.showinfo('', '注册成功！请您重新登录！')
             users = open('Users', 'a', encoding='utf-8')
             users.write(u1.get() + '+' + p1.get() + '+' + em1.get() + '\n')
             window_sign_up.destroy()
@@ -166,29 +167,29 @@ def sign_up():
         for email in user.values():
             emails.append(email[1])
         if em1.get() is '':
-            tk.messagebox.showerror('警告⚠️', '邮箱不能为空！')
+            tkinter.messagebox.showerror('警告⚠️', '邮箱不能为空！')
         elif em1.get() in emails:
-            tk.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
+            tkinter.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
         elif '@' not in em1.get():
-            tk.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
+            tkinter.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
         else:
             forgot(em1.get(), email_test)
 
-    window_sign_up = tk.Toplevel(window)
+    window_sign_up = Toplevel(window)
     window_sign_up.geometry('300x220')
     window_sign_up.title('注册窗口')
-    u = tk.Label(window_sign_up, text='用户名：', )
-    p = tk.Label(window_sign_up, text='密码：', )
-    cp = tk.Label(window_sign_up, text='确认密码：', )
-    em = tk.Label(window_sign_up, text='邮箱：', )
-    et = tk.Label(window_sign_up, text='验证码：', )
-    u1 = tk.Entry(window_sign_up, font='Arial')
-    p1 = tk.Entry(window_sign_up, show='*', font='Arial')
-    cp1 = tk.Entry(window_sign_up, show='*', font='Arial')
-    button = tk.Button(window_sign_up, text='注册', command=confirm, font='Arial')
-    em1 = tk.Entry(window_sign_up, font='Arial')
-    emts = tk.Button(window_sign_up, text='获取', command=get_emts, font='Arial')
-    et1 = tk.Entry(window_sign_up, font='Arial')
+    u = Label(window_sign_up, text='用户名：', )
+    p = Label(window_sign_up, text='密码：', )
+    cp = Label(window_sign_up, text='确认密码：', )
+    em = Label(window_sign_up, text='邮箱：', )
+    et = Label(window_sign_up, text='验证码：', )
+    u1 = Entry(window_sign_up)
+    p1 = Entry(window_sign_up, show='*')
+    cp1 = Entry(window_sign_up, show='*')
+    button = Button(window_sign_up, text='注册', command=confirm)
+    em1 = Entry(window_sign_up)
+    emts = Button(window_sign_up, text='获取', command=get_emts)
+    et1 = Entry(window_sign_up)
     u.place(x=20, y=15)
     et.place(x=20, y=155)
     p.place(x=33, y=50)
@@ -250,13 +251,13 @@ def search():
         webbrowser.open_new(web)
         url = ''
 
-    var = tk.StringVar(window)
+    var = StringVar(window)
     var.set("Baidu")
-    label = tk.Label(window, text='请输入您要搜寻的内容：')
+    label = Label(window, text='请输入您要搜寻的内容：')
     label.pack()
-    i = tk.Entry(window, width=50, font='Arial')
-    b1 = tk.Button(window, text='搜索', command=search_res, font='Arial')
-    option = tk.OptionMenu(window, var, 'Baidu', 'Baidubaike', 'Bing(China)',
+    i = Entry(window, width=50)
+    b1 = Button(window, text='搜索', command=search_res)
+    option = OptionMenu(window, var, 'Baidu', 'Baidubaike', 'Bing(China)',
                                         'Bing(International)', 'Google', 'Taobao',
                                         'DuckDuckGo', 'Wikipedia', 'CSDN',
                                         'Youtube', 'Facebook', 'Weibo', 'Amazon')
@@ -265,9 +266,9 @@ def search():
     option.pack()
 
 
-b = tk.Button(window, text='登录', command=log, font='Arial')
-forget = tk.Button(window, text='忘记密码？', command=send, font='Arial')
-signup = tk.Button(window, text='注册', command=sign_up, font='Arial')
+b = Button(window, text='登录', command=log)
+forget = Button(window, text='忘记密码？', command=send)
+signup = Button(window, text='注册', command=sign_up)
 b.place(x=210, y=85)
 forget.place(x=337, y=57)
 signup.place(x=250, y=85)
