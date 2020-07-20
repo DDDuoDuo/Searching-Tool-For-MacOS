@@ -116,13 +116,13 @@ def log():
         login = True
         if login is True:
             please_login_first_Label.pack_forget()
-            username_Label.place_forget()
-            pwd_Label.place_forget()
+            username_Label.pack_forget()
+            pwd_Label.pack_forget()
             username_Entry.pack_forget()
             pwd_Entry.pack_forget()
-            login_Button.place_forget()
-            signup_Button.place_forget()
-            pwd_forget_Button.place_forget()
+            login_Button.pack_forget()
+            signup_Button.pack_forget()
+            pwd_forget_Button.pack_forget()
             search()
     else:
         tkinter.messagebox.showerror('警告⚠️', '️登录失败，请检查用户名或密码是否正确！')
