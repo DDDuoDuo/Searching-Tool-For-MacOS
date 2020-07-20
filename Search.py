@@ -1,4 +1,5 @@
 import webbrowser
+import time
 import tkinter as tk
 import tkinter.messagebox
 from urllib.parse import quote
@@ -135,6 +136,10 @@ def sign_up():
             emails.append(email[1])
         if u1.get() in user.keys():
             tk.messagebox.showerror('警告⚠️', '️此用户名已存在！')
+        elif '+' in u1.get():
+            tk.messagebox.showerror('警告⚠️', '️用户名不能包含加号！')
+        elif '+' in p1.get():
+            tk.messagebox.showerror('警告⚠️', '️密码不能包含加号！')
         elif p1.get() != cp1.get():
             tk.messagebox.showerror('警告⚠️', '️请输入正确的密码！')
         elif u1.get() is '':
@@ -145,7 +150,7 @@ def sign_up():
             tk.messagebox.showerror('警告⚠️', '邮箱不能为空！')
         elif em1.get() in emails:
             tk.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
-        elif '@' and '.com' not in em1.get():
+        elif '@' not in em1.get() or '.' not in em1.get():
             tk.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
         elif et1.get() != email_test:
             tk.messagebox.showerror('警告⚠️', '请输入正确的验证码！')
@@ -164,7 +169,7 @@ def sign_up():
             tk.messagebox.showerror('警告⚠️', '邮箱不能为空！')
         elif em1.get() in emails:
             tk.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
-        elif '@' and '.com' not in em1.get():
+        elif '@' not in em1.get():
             tk.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
         else:
             forgot(em1.get(), email_test)
