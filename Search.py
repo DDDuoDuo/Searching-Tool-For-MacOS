@@ -25,11 +25,11 @@ login = False
 
 def find_record():
     users = open('Users', 'r')
-    tmp = users.readline().split('+')
+    tmp = users.readline().strip().split('+')
     u = dict()
     while len(tmp) != 1:
-        u[tmp[0]] = [tmp[1], tmp[2][:-1]]
-        tmp = users.readline().split('+')
+        u[tmp[0]] = [tmp[1], tmp[2]]
+        tmp = users.readline().strip().split('+')
     return u
 
 
@@ -118,9 +118,9 @@ def log():
             pwd_Label.place_forget()
             username_Entry.pack_forget()
             pwd_Entry.pack_forget()
-            login_btn.place_forget()
-            signup.place_forget()
-            forget_pwd_btn.place_forget()
+            login_Button.place_forget()
+            signup_Button.place_forget()
+            pwd_forget_Button.place_forget()
             search()
     else:
         tkinter.messagebox.showerror('警告⚠️', '️登录失败，请检查用户名或密码是否正确！')
@@ -233,7 +233,7 @@ def search():
             url = 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords='
         if s == 'Taobao':
             url = 'https://s.taobao.com/search?q='
-        words = str(i.get()).split()
+        words = str(search_Entry.get()).split()
         for w in words:
             url += w
             if len(words) > 1:
@@ -253,25 +253,25 @@ def search():
 
     var = StringVar(window)
     var.set("Baidu")
-    label = Label(window, text='请输入您要搜寻的内容：')
-    label.pack()
-    i = Entry(window, width=50)
-    b1 = Button(window, text='搜索', command=search_res)
+    search_tips_Label = Label(window, text='请输入您要搜寻的内容：')
+    search_tips_Label.pack()
+    search_Entry = Entry(window, width=50)
+    search_Button = Button(window, text='搜索', command=search_res)
     option = OptionMenu(window, var, 'Baidu', 'Baidubaike', 'Bing(China)',
                                         'Bing(International)', 'Google', 'Taobao',
                                         'DuckDuckGo', 'Wikipedia', 'CSDN',
                                         'Youtube', 'Facebook', 'Weibo', 'Amazon')
-    i.pack()
-    b1.pack()
+    search_Entry.pack()
+    search_Button.pack()
     option.pack()
 
 
-login_btn = Button(window, text='登录', command=log)
-forget_pwd_btn = Button(window, text='忘记密码？', command=send)
-signup = Button(window, text='注册', command=sign_up)
-login_btn.place(x=210, y=85)
-forget_pwd_btn.place(x=337, y=57)
-signup.place(x=250, y=85)
+login_Button = Button(window, text='登录', command=log)
+pwd_forget_Button = Button(window, text='忘记密码？', command=send)
+signup_Button = Button(window, text='注册', command=sign_up)
+login_Button.place(x=210, y=85)
+pwd_forget_Button.place(x=337, y=57)
+signup_Button.place(x=250, y=85)
 username_Entry.pack()
 username_Label.place(x=100, y=27.5)
 pwd_Entry.pack()
