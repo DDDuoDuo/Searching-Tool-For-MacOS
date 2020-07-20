@@ -23,14 +23,14 @@ pwd_Entry = Entry(window, show='*')
 login = False
 
 
-def find_record():
-    users = open('Users', 'r')
-    tmp = users.readline().strip().split('+')
-    u = dict()
-    while len(tmp) != 1:
-        u[tmp[0]] = [tmp[1], tmp[2]]
-        tmp = users.readline().strip().split('+')
-    return u
+def database_users():
+    users_file = open('Users', 'r')
+    now = users_file.readline().strip().split('+')
+    users_dict = dict()
+    while len(now) != 1:
+        users_dict[now[0]] = [now[1], now[2]]
+        now = users_file.readline().strip().split('+')
+    return users_dict
 
 
 def forgot(email, email_test):
@@ -69,7 +69,7 @@ def send():
 
     def confirm():
         global password_
-        user = find_record()
+        user = database_users()
         emails = list()
         for email in user.values():
             emails.append(email[1])
@@ -108,7 +108,7 @@ def send():
 
 def log():
     global login
-    user = find_record()
+    user = database_users()
     if username_Entry.get() in user.keys() and pwd_Entry.get() == user[username_Entry.get()][0]:
         tkinter.messagebox.showinfo('', '登录成功！')
         login = True
@@ -131,7 +131,7 @@ def sign_up():
     email_test = generate()
 
     def confirm():
-        user = find_record()
+        user = database_users()
         emails = list()
         for email in user.values():
             emails.append(email[1])
@@ -162,7 +162,7 @@ def sign_up():
             window_sign_up.destroy()
 
     def get_emts():
-        user = find_record()
+        user = database_users()
         emails = list()
         for email in user.values():
             emails.append(email[1])
