@@ -1,25 +1,27 @@
-import webbrowser
-import time
-from tkinter import *
-from tkinter.ttk import *
-import tkinter.messagebox
-from urllib.parse import quote
+import smtplib
 import string
-from random import randint
+import tkinter.messagebox
+import webbrowser
 from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
-import smtplib
+from random import randint
+from tkinter import *
+from tkinter.ttk import *
+from urllib.parse import quote
 
 window = Tk()
 window.title('查询工具')
 window.geometry('500x110')
+username_Frame = Frame()
+pwd_Frame = Frame()
+login_and_signup_Frame=Frame()
 please_login_first_Label = Label(window, text='请先登录！')
 please_login_first_Label.pack()
-username_Label = Label(window, text='用户名：', )
-pwd_Label = Label(window, text='密码：', )
-username_Entry = Entry(window)
-pwd_Entry = Entry(window, show='*')
+username_Label = Label(username_Frame, text='用户名：', )
+pwd_Label = Label(pwd_Frame, text='密码：', )
+username_Entry = Entry(username_Frame)
+pwd_Entry = Entry(pwd_Frame, show='*')
 login = False
 
 
@@ -34,7 +36,6 @@ def database_users():
 
 
 def forgot(email, email_test):
-
     def _format_addr(s):
         name, addr = parseaddr(s)
         return formataddr((Header(name, 'utf-8').encode(), addr))
@@ -79,6 +80,7 @@ def send():
             def _format_addr(s):
                 name, addr = parseaddr(s)
                 return formataddr((Header(name, 'utf-8').encode(), addr))
+
             for key in user.keys():
                 if user[key][1] == em1.get():
                     password_ = user[key][0]
@@ -258,23 +260,29 @@ def search():
     search_Entry = Entry(window, width=50)
     search_Button = Button(window, text='搜索', command=search_res)
     option = OptionMenu(window, var, 'Baidu', 'Baidubaike', 'Bing(China)',
-                                        'Bing(International)', 'Google', 'Taobao',
-                                        'DuckDuckGo', 'Wikipedia', 'CSDN',
-                                        'Youtube', 'Facebook', 'Weibo', 'Amazon')
+                        'Bing(International)', 'Google', 'Taobao',
+                        'DuckDuckGo', 'Wikipedia', 'CSDN',
+                        'Youtube', 'Facebook', 'Weibo', 'Amazon')
     search_Entry.pack()
     search_Button.pack()
     option.pack()
 
 
-login_Button = Button(window, text='登录', command=log)
-pwd_forget_Button = Button(window, text='忘记密码？', command=send)
-signup_Button = Button(window, text='注册', command=sign_up)
-login_Button.place(x=210, y=85)
-pwd_forget_Button.place(x=337, y=57)
-signup_Button.place(x=250, y=85)
-username_Entry.pack()
-username_Label.place(x=100, y=27.5)
-pwd_Entry.pack()
-pwd_Label.place(x=113, y=56)
 
+
+
+login_Button = Button(login_and_signup_Frame, text='登录', command=log)
+pwd_forget_Button = Button(login_and_signup_Frame, text='忘记密码？', command=send)
+signup_Button = Button(login_and_signup_Frame, text='注册', command=sign_up)
+login_Button.pack(side=LEFT)
+pwd_forget_Button.pack(side=LEFT)
+signup_Button.pack(side=RIGHT)
+username_Entry.pack(side=RIGHT)
+username_Label.pack(side=LEFT)
+pwd_Entry.pack(side=RIGHT)
+pwd_Label.pack(side=LEFT)
+
+username_Frame.pack()
+pwd_Frame.pack()
+login_and_signup_Frame.pack()
 window.mainloop()
