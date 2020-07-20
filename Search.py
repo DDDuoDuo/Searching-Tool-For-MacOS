@@ -14,12 +14,12 @@ import smtplib
 window = Tk()
 window.title('查询工具')
 window.geometry('500x110')
-a = Label(window, text='请先登录！')
-a.pack()
-el1 = Label(window, text='用户名：', )
-el2 = Label(window, text='密码：', )
-e1 = Entry(window)
-e2 = Entry(window, show='*')
+please_login_first_Label = Label(window, text='请先登录！')
+please_login_first_Label.pack()
+username_Label = Label(window, text='用户名：', )
+pwd_Label = Label(window, text='密码：', )
+username_Entry = Entry(window)
+pwd_Entry = Entry(window, show='*')
 login = False
 
 
@@ -109,18 +109,18 @@ def send():
 def log():
     global login
     user = find_record()
-    if e1.get() in user.keys() and e2.get() == user[e1.get()][0]:
+    if username_Entry.get() in user.keys() and pwd_Entry.get() == user[username_Entry.get()][0]:
         tkinter.messagebox.showinfo('', '登录成功！')
         login = True
         if login is True:
-            a.pack_forget()
-            el1.place_forget()
-            el2.place_forget()
-            e1.pack_forget()
-            e2.pack_forget()
-            b.place_forget()
+            please_login_first_Label.pack_forget()
+            username_Label.place_forget()
+            pwd_Label.place_forget()
+            username_Entry.pack_forget()
+            pwd_Entry.pack_forget()
+            login_btn.place_forget()
             signup.place_forget()
-            forget.place_forget()
+            forget_pwd_btn.place_forget()
             search()
     else:
         tkinter.messagebox.showerror('警告⚠️', '️登录失败，请检查用户名或密码是否正确！')
@@ -266,15 +266,15 @@ def search():
     option.pack()
 
 
-b = Button(window, text='登录', command=log)
-forget = Button(window, text='忘记密码？', command=send)
+login_btn = Button(window, text='登录', command=log)
+forget_pwd_btn = Button(window, text='忘记密码？', command=send)
 signup = Button(window, text='注册', command=sign_up)
-b.place(x=210, y=85)
-forget.place(x=337, y=57)
+login_btn.place(x=210, y=85)
+forget_pwd_btn.place(x=337, y=57)
 signup.place(x=250, y=85)
-e1.pack()
-el1.place(x=100, y=27.5)
-e2.pack()
-el2.place(x=113, y=56)
+username_Entry.pack()
+username_Label.place(x=100, y=27.5)
+pwd_Entry.pack()
+pwd_Label.place(x=113, y=56)
 
 window.mainloop()
