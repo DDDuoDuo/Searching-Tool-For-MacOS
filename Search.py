@@ -15,7 +15,7 @@ window.title('查询工具')
 window.geometry('500x110')
 username_Frame = Frame()
 pwd_Frame = Frame()
-login_and_signup_Frame=Frame()
+login_and_signup_Frame = Frame()
 please_login_first_Label = Label(window, text='请先登录！')
 please_login_first_Label.pack()
 username_Label = Label(username_Frame, text='用户名：', )
@@ -266,9 +266,6 @@ def search():
     search_Entry.pack()
     search_Button.pack()
     option.pack()
-
-
-
 
 
 login_Button = Button(login_and_signup_Frame, text='登录', command=log)
