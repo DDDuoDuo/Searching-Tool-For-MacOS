@@ -1,8 +1,7 @@
 # 搜索页 OK
 # 主页 OK
-# TODO
-#   注册页
-#   忘记密码页
+# TODO 注册页
+# TODO 忘记密码页
 import smtplib
 import string
 import tkinter.messagebox
@@ -10,7 +9,6 @@ import webbrowser
 from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
-from random import randint
 from tkinter import *
 from tkinter.ttk import *
 from urllib.parse import quote
@@ -30,12 +28,12 @@ login = False
 
 
 def database_users():
-    users_file = open('Users', 'r')
-    now = users_file.readline().strip().split('+')
+    users_file = open('Users', 'r', encoding='utf-8')
+    users_file_read = users_file.read().strip().split("\n")
     users_dict = dict()
-    while len(now) != 1:
-        users_dict[now[0]] = [now[1], now[2]]
-        now = users_file.readline().strip().split('+')
+    for x in users_file_read:
+        now = x.strip().split('+')
+        if len(now) == 3: users_dict[now[0]] = [now[1], now[2]]
     return users_dict
 
 
@@ -60,11 +58,10 @@ def forgot(email, email_test):
     tkinter.messagebox.showinfo('', '验证码已发送！')
 
 
-def generate():
-    email_test = ''
-    for m in range(6):
-        email_test += str(randint(0, 9))
-    return email_test
+def generate(email):
+    return str(abs(hash(email)))[int(str(abs(hash(email)))[0])] + str(abs(hash(email)))[int(str(abs(hash(email)))[1])] + \
+           str(abs(hash(email)))[int(str(abs(hash(email)))[2])] + str(abs(hash(email)))[int(str(abs(hash(email)))[3])] + \
+           str(abs(hash(email)))[int(str(abs(hash(email)))[4])] + str(abs(hash(email)))[int(str(abs(hash(email)))[5])]
 
 
 def send():
@@ -134,7 +131,6 @@ def log():
 
 
 def sign_up():
-    email_test = generate()
 
     def confirm():
         user = database_users()
@@ -159,7 +155,7 @@ def sign_up():
             tkinter.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
         elif '@' not in email_Entry.get() or '.' not in email_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
-        elif captcha_Entry.get() != email_test:
+        elif captcha_Entry.get() != generate(email_Entry.get()):
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的验证码！')
         else:
             tkinter.messagebox.showinfo('', '注册成功！请您重新登录！')
@@ -176,10 +172,10 @@ def sign_up():
             tkinter.messagebox.showerror('警告⚠️', '邮箱不能为空！')
         elif email_Entry.get() in emails:
             tkinter.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
-        elif '@' not in email_Entry.get():
+        elif '@' not in email_Entry.get() or '.' not in email_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
         else:
-            forgot(email_Entry.get(), email_test)
+            forgot(email_Entry.get(), generate(email_Entry.get()))
 
     window_sign_up = Toplevel(window)
     window_sign_up.geometry('300x220')
