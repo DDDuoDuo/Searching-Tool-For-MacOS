@@ -136,15 +136,15 @@ def sign_up():
         emails = list()
         for email in user.values():
             emails.append(email[1])
-        if u1.get() in user.keys():
+        if username_reg_Entry.get() in user.keys():
             tkinter.messagebox.showerror('警告⚠️', '️此账号已存在！')
-        elif '+' in u1.get():
+        elif '+' in username_reg_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '️账号不能包含加号！')
         elif '+' in p1.get():
             tkinter.messagebox.showerror('警告⚠️', '️密码不能包含加号！')
         elif p1.get() != cp1.get():
             tkinter.messagebox.showerror('警告⚠️', '️请输入正确的密码！')
-        elif u1.get() is '':
+        elif username_reg_Entry.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '账号不能为空！')
         elif p1.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '密码不能为空！')
@@ -159,7 +159,7 @@ def sign_up():
         else:
             tkinter.messagebox.showinfo('', '注册成功！请您重新登录！')
             users = open('Users', 'a', encoding='utf-8')
-            users.write(u1.get() + '+' + p1.get() + '+' + em1.get() + '\n')
+            users.write(username_reg_Entry.get() + '+' + p1.get() + '+' + em1.get() + '\n')
             window_sign_up.destroy()
 
     def get_emts():
@@ -184,7 +184,7 @@ def sign_up():
     pwd_twice_reg_Label = Label(window_sign_up, text='确认密码：', )
     email_Label = Label(window_sign_up, text='邮箱：', )
     captcha_Label = Label(window_sign_up, text='验证码：', )
-    u1 = Entry(window_sign_up)
+    username_reg_Entry = Entry(window_sign_up)
     p1 = Entry(window_sign_up, show='*')
     cp1 = Entry(window_sign_up, show='*')
     button = Button(window_sign_up, text='注册', command=confirm)
@@ -196,7 +196,7 @@ def sign_up():
     pwd_reg_Label.place(x=33, y=50)
     pwd_twice_reg_Label.place(x=7, y=85)
     email_Label.place(x=33, y=120)
-    u1.place(x=75, y=15)
+    username_reg_Entry.place(x=75, y=15)
     p1.place(x=75, y=50)
     cp1.place(x=75, y=85)
     em1.place(x=75, y=120)
