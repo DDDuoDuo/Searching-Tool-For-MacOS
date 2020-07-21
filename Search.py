@@ -24,7 +24,6 @@ pwd_Entry = Entry(pwd_Frame, show='*')
 login = False
 
 
-# abc
 def database_users():
     users_file = open('Users', 'r')
     now = users_file.readline().strip().split('+')
