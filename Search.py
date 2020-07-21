@@ -1,3 +1,8 @@
+# 搜索页 OK
+# 主页 OK
+# TODO
+#   注册页
+#   忘记密码页
 import smtplib
 import string
 import tkinter.messagebox
