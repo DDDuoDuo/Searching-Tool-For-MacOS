@@ -12,13 +12,12 @@ from urllib.parse import quote
 
 window = Tk()
 window.title('查询工具')
-window.geometry('500x110')
 username_Frame = Frame()
 pwd_Frame = Frame()
 login_and_signup_Frame = Frame()
 please_login_first_Label = Label(window, text='请先登录！')
 please_login_first_Label.pack()
-username_Label = Label(username_Frame, text='用户名：', )
+username_Label = Label(username_Frame, text='账号：', )
 pwd_Label = Label(pwd_Frame, text='密码：', )
 username_Entry = Entry(username_Frame)
 pwd_Entry = Entry(pwd_Frame, show='*')
@@ -125,7 +124,7 @@ def log():
             pwd_forget_Button.pack_forget()
             search()
     else:
-        tkinter.messagebox.showerror('警告⚠️', '️登录失败，请检查用户名或密码是否正确！')
+        tkinter.messagebox.showerror('警告⚠️', '️登录失败，请检查账号或密码是否正确！')
         login = False
 
 
@@ -138,15 +137,15 @@ def sign_up():
         for email in user.values():
             emails.append(email[1])
         if u1.get() in user.keys():
-            tkinter.messagebox.showerror('警告⚠️', '️此用户名已存在！')
+            tkinter.messagebox.showerror('警告⚠️', '️此账号已存在！')
         elif '+' in u1.get():
-            tkinter.messagebox.showerror('警告⚠️', '️用户名不能包含加号！')
+            tkinter.messagebox.showerror('警告⚠️', '️账号不能包含加号！')
         elif '+' in p1.get():
             tkinter.messagebox.showerror('警告⚠️', '️密码不能包含加号！')
         elif p1.get() != cp1.get():
             tkinter.messagebox.showerror('警告⚠️', '️请输入正确的密码！')
         elif u1.get() is '':
-            tkinter.messagebox.showerror('警告⚠️', '用户名不能为空！')
+            tkinter.messagebox.showerror('警告⚠️', '账号不能为空！')
         elif p1.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '密码不能为空！')
         elif em1.get() is '':
@@ -180,7 +179,7 @@ def sign_up():
     window_sign_up = Toplevel(window)
     window_sign_up.geometry('300x220')
     window_sign_up.title('注册窗口')
-    u = Label(window_sign_up, text='用户名：', )
+    u = Label(window_sign_up, text='账号：', )
     p = Label(window_sign_up, text='密码：', )
     cp = Label(window_sign_up, text='确认密码：', )
     em = Label(window_sign_up, text='邮箱：', )
