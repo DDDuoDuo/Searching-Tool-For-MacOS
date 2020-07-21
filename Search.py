@@ -33,7 +33,8 @@ def database_users():
     users_dict = dict()
     for x in users_file_read:
         now = x.strip().split('+')
-        if len(now) == 3: users_dict[now[0]] = [now[1], now[2]]
+        if len(now) == 3:
+            users_dict[now[0]] = [now[1], now[2]]
     return users_dict
 
 
@@ -59,9 +60,12 @@ def forgot(email, email_test):
 
 
 def generate(email):
-    return str(abs(hash(email)))[int(str(abs(hash(email)))[0])] + str(abs(hash(email)))[int(str(abs(hash(email)))[1])] + \
-           str(abs(hash(email)))[int(str(abs(hash(email)))[2])] + str(abs(hash(email)))[int(str(abs(hash(email)))[3])] + \
-           str(abs(hash(email)))[int(str(abs(hash(email)))[4])] + str(abs(hash(email)))[int(str(abs(hash(email)))[5])]
+    return str(abs(hash(email)))[int(str(abs(hash(email)))[0])] + \
+           str(abs(hash(email)))[int(str(abs(hash(email)))[1])] + \
+           str(abs(hash(email)))[int(str(abs(hash(email)))[2])] + \
+           str(abs(hash(email)))[int(str(abs(hash(email)))[3])] + \
+           str(abs(hash(email)))[int(str(abs(hash(email)))[4])] + \
+           str(abs(hash(email)))[int(str(abs(hash(email)))[5])]
 
 
 def send():
@@ -131,7 +135,6 @@ def log():
 
 
 def sign_up():
-
     def confirm():
         user = database_users()
         emails = list()
@@ -149,18 +152,18 @@ def sign_up():
             tkinter.messagebox.showerror('警告⚠️', '账号不能为空！')
         elif pwd_reg_Entry.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '密码不能为空！')
-        elif email_Entry.get() is '':
+        elif email_reg_Entry.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '邮箱不能为空！')
-        elif email_Entry.get() in emails:
+        elif email_reg_Entry.get() in emails:
             tkinter.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
-        elif '@' not in email_Entry.get() or '.' not in email_Entry.get():
+        elif '@' not in email_reg_Entry.get() or '.' not in email_reg_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
-        elif captcha_Entry.get() != generate(email_Entry.get()):
+        elif captcha_Entry.get() != generate(email_reg_Entry.get()):
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的验证码！')
         else:
             tkinter.messagebox.showinfo('', '注册成功！请您重新登录！')
             users = open('Users', 'a', encoding='utf-8')
-            users.write(username_reg_Entry.get() + '+' + pwd_reg_Entry.get() + '+' + email_Entry.get() + '\n')
+            users.write(username_reg_Entry.get() + '+' + pwd_reg_Entry.get() + '+' + email_reg_Entry.get() + '\n')
             window_sign_up.destroy()
 
     def get_emts():
@@ -168,43 +171,67 @@ def sign_up():
         emails = list()
         for email in user.values():
             emails.append(email[1])
-        if email_Entry.get() is '':
+        if email_reg_Entry.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '邮箱不能为空！')
-        elif email_Entry.get() in emails:
+        elif email_reg_Entry.get() in emails:
             tkinter.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
-        elif '@' not in email_Entry.get() or '.' not in email_Entry.get():
+        elif '@' not in email_reg_Entry.get() or '.' not in email_reg_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
         else:
-            forgot(email_Entry.get(), generate(email_Entry.get()))
+            forgot(email_reg_Entry.get(), generate(email_reg_Entry.get()))
 
     window_sign_up = Toplevel(window)
     window_sign_up.geometry('300x220')
     window_sign_up.title('注册窗口')
-    username_reg_Label = Label(window_sign_up, text='账号：', )
-    pwd_reg_Label = Label(window_sign_up, text='密码：', )
-    pwd_twice_reg_Label = Label(window_sign_up, text='确认密码：', )
-    email_Label = Label(window_sign_up, text='邮箱：', )
-    captcha_Label = Label(window_sign_up, text='验证码：', )
-    username_reg_Entry = Entry(window_sign_up)
-    pwd_reg_Entry = Entry(window_sign_up, show='*')
-    pwd_twice_reg_Entry = Entry(window_sign_up, show='*')
+    username_reg_Frame = Frame(window_sign_up)
+    pwd_reg_Frame = Frame(window_sign_up)
+    pwd_twice_reg_Frame = Frame(window_sign_up)
+    email_reg_Frame = Frame(window_sign_up)
+    captcha_reg_Frame = Frame(window_sign_up)
+    username_reg_Label = Label(username_reg_Frame, text='账号：')
+    pwd_reg_Label = Label(pwd_reg_Frame, text='密码：')
+    pwd_twice_reg_Label = Label(pwd_twice_reg_Frame, text='确认：')
+    email_reg_Label = Label(email_reg_Frame, text='邮箱：', )
+    captcha_Label = Label(captcha_reg_Frame, text='验证码：', )
+    username_reg_Entry = Entry(username_reg_Frame)
+    pwd_reg_Entry = Entry(pwd_reg_Frame, show='*')
+    pwd_twice_reg_Entry = Entry(pwd_twice_reg_Frame, show='*')
     reg_Button = Button(window_sign_up, text='注册', command=confirm)
-    email_Entry = Entry(window_sign_up)
-    captcha_Button = Button(window_sign_up, text='获取', command=get_emts)
-    captcha_Entry = Entry(window_sign_up)
-    username_reg_Label.place(x=20, y=15)
-    captcha_Label.place(x=20, y=155)
-    pwd_reg_Label.place(x=33, y=50)
-    pwd_twice_reg_Label.place(x=7, y=85)
-    email_Label.place(x=33, y=120)
-    username_reg_Entry.place(x=75, y=15)
-    pwd_reg_Entry.place(x=75, y=50)
-    pwd_twice_reg_Entry.place(x=75, y=85)
-    email_Entry.place(x=75, y=120)
-    captcha_Entry.place(x=75, y=155)
-    reg_Button.place(x=135, y=190)
-    captcha_Button.place(x=250, y=160)
+    email_reg_Entry = Entry(email_reg_Frame)
+    captcha_get_Button = Button(window_sign_up, text='获取验证码', command=get_emts)
+    captcha_Entry = Entry(captcha_reg_Frame)
+    # username_reg_Label.place(x=20, y=15)
+    # captcha_Label.place(x=20, y=155)
+    # pwd_reg_Label.place(x=33, y=50)
+    # pwd_twice_reg_Label.place(x=7, y=85)
+    # email_reg_Label.place(x=33, y=120)
+    # username_reg_Entry.place(x=75, y=15)
+    # pwd_reg_Entry.place(x=75, y=50)
+    # pwd_twice_reg_Entry.place(x=75, y=85)
+    # email_reg_Entry.place(x=75, y=120)
+    # captcha_Entry.place(x=75, y=155)
+    # reg_Button.place(x=135, y=190)
+    # captcha_get_Button.place(x=250, y=160)
 
+    username_reg_Label.pack(side=LEFT)
+    username_reg_Entry.pack(side=LEFT)
+    captcha_Label.pack(side=LEFT)
+    captcha_Entry.pack(side=LEFT)
+    pwd_reg_Label.pack(side=LEFT)
+    pwd_reg_Entry.pack(side=LEFT)
+    pwd_twice_reg_Label.pack(side=LEFT)
+    pwd_twice_reg_Entry.pack(side=LEFT)
+    email_reg_Label.pack(side=LEFT)
+    email_reg_Entry.pack(side=LEFT, fill="x")
+
+    username_reg_Frame.pack(anchor="w")
+    pwd_reg_Frame.pack(anchor="w")
+    pwd_twice_reg_Frame.pack(anchor="w")
+    email_reg_Frame.pack(anchor="w")
+    captcha_get_Button.pack(anchor="w", fill="x")
+
+    captcha_reg_Frame.pack(anchor="w")
+    reg_Button.pack(anchor="w", fill="x")
 
 def search():
     def search_res():
