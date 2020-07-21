@@ -1,4 +1,3 @@
-# 老王牛逼
 import smtplib
 import string
 import tkinter.messagebox
@@ -74,7 +73,7 @@ def send():
         emails = list()
         for email in user.values():
             emails.append(email[1])
-        if em1.get() not in emails:
+        if email_forget_Entry.get() not in emails:
             tkinter.messagebox.showerror('警告⚠️', '此邮箱未注册！')
         else:
             def _format_addr(s):
@@ -82,11 +81,11 @@ def send():
                 return formataddr((Header(name, 'utf-8').encode(), addr))
 
             for key in user.keys():
-                if user[key][1] == em1.get():
+                if user[key][1] == email_forget_Entry.get():
                     password_ = user[key][0]
             from_addr = 'marioliang0704@qq.com'
             password = 'bfjzclbewveeebii'
-            to_addr = em1.get()
+            to_addr = email_forget_Entry.get()
             smtp_server = 'smtp.qq.com'
             msg = MIMEText('您的密码为{}'.format(password_), 'plain', 'utf-8')
             msg['From'] = _format_addr('密码<%s>' % from_addr)
@@ -100,12 +99,12 @@ def send():
             tkinter.messagebox.showinfo('', '您的密码已发送到您的邮箱中！')
             window_forgot.destroy()
 
-    em = Label(window_forgot, text='邮箱：', )
-    em1 = Entry(window_forgot)
-    emts = Button(window_forgot, text='获取', command=confirm)
-    em.place(x=33, y=15)
-    em1.place(x=75, y=15)
-    emts.place(x=250, y=20)
+    email_forget_Label = Label(window_forgot, text='邮箱：', )
+    email_forget_Entry = Entry(window_forgot)
+    forget_Button = Button(window_forgot, text='获取', command=confirm)
+    email_forget_Label.place(x=33, y=15)
+    email_forget_Entry.place(x=75, y=15)
+    forget_Button.place(x=250, y=20)
 
 
 def log():
@@ -141,26 +140,26 @@ def sign_up():
             tkinter.messagebox.showerror('警告⚠️', '️此账号已存在！')
         elif '+' in username_reg_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '️账号不能包含加号！')
-        elif '+' in p1.get():
+        elif '+' in pwd_reg_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '️密码不能包含加号！')
-        elif p1.get() != cp1.get():
+        elif pwd_reg_Entry.get() != pwd_twice_reg_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '️请输入正确的密码！')
         elif username_reg_Entry.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '账号不能为空！')
-        elif p1.get() is '':
+        elif pwd_reg_Entry.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '密码不能为空！')
-        elif em1.get() is '':
+        elif email_Entry.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '邮箱不能为空！')
-        elif em1.get() in emails:
+        elif email_Entry.get() in emails:
             tkinter.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
-        elif '@' not in em1.get() or '.' not in em1.get():
+        elif '@' not in email_Entry.get() or '.' not in email_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
-        elif et1.get() != email_test:
+        elif captcha_Entry.get() != email_test:
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的验证码！')
         else:
             tkinter.messagebox.showinfo('', '注册成功！请您重新登录！')
             users = open('Users', 'a', encoding='utf-8')
-            users.write(username_reg_Entry.get() + '+' + p1.get() + '+' + em1.get() + '\n')
+            users.write(username_reg_Entry.get() + '+' + pwd_reg_Entry.get() + '+' + email_Entry.get() + '\n')
             window_sign_up.destroy()
 
     def get_emts():
@@ -168,14 +167,14 @@ def sign_up():
         emails = list()
         for email in user.values():
             emails.append(email[1])
-        if em1.get() is '':
+        if email_Entry.get() is '':
             tkinter.messagebox.showerror('警告⚠️', '邮箱不能为空！')
-        elif em1.get() in emails:
+        elif email_Entry.get() in emails:
             tkinter.messagebox.showerror('警告⚠️', '此邮箱已被其他用户使用！')
-        elif '@' not in em1.get():
+        elif '@' not in email_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '请输入正确的邮箱！')
         else:
-            forgot(em1.get(), email_test)
+            forgot(email_Entry.get(), email_test)
 
     window_sign_up = Toplevel(window)
     window_sign_up.geometry('300x220')
@@ -186,24 +185,24 @@ def sign_up():
     email_Label = Label(window_sign_up, text='邮箱：', )
     captcha_Label = Label(window_sign_up, text='验证码：', )
     username_reg_Entry = Entry(window_sign_up)
-    p1 = Entry(window_sign_up, show='*')
-    cp1 = Entry(window_sign_up, show='*')
-    button = Button(window_sign_up, text='注册', command=confirm)
-    em1 = Entry(window_sign_up)
-    emts = Button(window_sign_up, text='获取', command=get_emts)
-    et1 = Entry(window_sign_up)
+    pwd_reg_Entry = Entry(window_sign_up, show='*')
+    pwd_twice_reg_Entry = Entry(window_sign_up, show='*')
+    reg_Button = Button(window_sign_up, text='注册', command=confirm)
+    email_Entry = Entry(window_sign_up)
+    captcha_Button = Button(window_sign_up, text='获取', command=get_emts)
+    captcha_Entry = Entry(window_sign_up)
     username_reg_Label.place(x=20, y=15)
     captcha_Label.place(x=20, y=155)
     pwd_reg_Label.place(x=33, y=50)
     pwd_twice_reg_Label.place(x=7, y=85)
     email_Label.place(x=33, y=120)
     username_reg_Entry.place(x=75, y=15)
-    p1.place(x=75, y=50)
-    cp1.place(x=75, y=85)
-    em1.place(x=75, y=120)
-    et1.place(x=75, y=155)
-    button.place(x=135, y=190)
-    emts.place(x=250, y=160)
+    pwd_reg_Entry.place(x=75, y=50)
+    pwd_twice_reg_Entry.place(x=75, y=85)
+    email_Entry.place(x=75, y=120)
+    captcha_Entry.place(x=75, y=155)
+    reg_Button.place(x=135, y=190)
+    captcha_Button.place(x=250, y=160)
 
 
 def search():
