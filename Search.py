@@ -2,6 +2,7 @@
 # 主页 OK
 # TODO 注册页
 # TODO 忘记密码页
+import platform
 import smtplib
 import string
 import tkinter.messagebox
@@ -10,7 +11,9 @@ from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 from tkinter import *
-from tkinter.ttk import *
+
+if platform.system() == 'Windows': from tkinter.ttk import *
+# from tkinter.ttk import *
 from urllib.parse import quote
 
 window = Tk()
