@@ -2,6 +2,7 @@
 # 主页 OK
 # 注册页
 # 忘记密码页
+# 老王牛逼不？
 import platform
 import smtplib
 import string
