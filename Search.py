@@ -44,6 +44,10 @@ def database_users():
     for x in users_file_read:
         now = x.strip().split('+')
         if len(now) == 3:
+            if "#" in now[0]:
+                continue
+            if "//" in now[0]:
+                continue
             users_dict[now[0]] = [now[1], now[2]]
     return users_dict
 
@@ -168,7 +172,11 @@ def sign_up():
         elif '+' in username_reg_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '️账号不能包含加号！')
         elif '+' in pwd_reg_Entry.get():
-            tkinter.messagebox.showerror('警告⚠️', '️密码不能包含加号！')
+            tkinter.messagebox.showerror('警告⚠️', '️密码不能包含+！')
+        elif '#' in pwd_reg_Entry.get():
+            tkinter.messagebox.showerror('警告⚠️', '️密码不能包含#！')
+        elif '/' in pwd_reg_Entry.get():
+            tkinter.messagebox.showerror('警告⚠️', '️密码不能包含/！')
         elif pwd_reg_Entry.get() != pwd_twice_reg_Entry.get():
             tkinter.messagebox.showerror('警告⚠️', '️请输入正确的密码！')
         elif username_reg_Entry.get() is '':
