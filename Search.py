@@ -1,7 +1,7 @@
 # 搜索页 OK
 # 主页 OK
-# TODO 注册页
-# TODO 忘记密码页
+# 注册页
+# 忘记密码页
 import platform
 import smtplib
 import string
