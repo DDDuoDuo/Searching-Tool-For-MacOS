@@ -6,6 +6,7 @@
 import platform
 import smtplib
 import string
+import time
 import tkinter.messagebox
 import webbrowser
 from email.header import Header
@@ -15,7 +16,8 @@ from tkinter import *
 
 signup_time_global = None
 forget_time_global = None
-
+signup_wait = 60
+forget_wait = 60
 if platform.system() == 'Windows':
     from tkinter.ttk import *
 # from tkinter.ttk import *
@@ -47,6 +49,13 @@ def database_users():
 
 
 def forgot(email, email_test):
+    global signup_time_global
+    if signup_time_global is None or signup_time_global - time.time() > signup_wait:
+        signup_time_global = time.time()
+    else:
+        tkinter.messagebox.showerror('警告⚠️', '你太快了！\n爪巴！')
+        return False
+
     def _format_addr(s):
         name, addr = parseaddr(s)
         return formataddr((Header(name, 'utf-8').encode(), addr))
@@ -82,7 +91,7 @@ def send():
     window_forgot.title('忘记密码')
 
     def confirm():
-        global password_
+        global forget_time_global, password_
         user = database_users()
         emails = list()
         for email in user.values():
@@ -90,6 +99,12 @@ def send():
         if email_forget_Entry.get() not in emails:
             tkinter.messagebox.showerror('警告⚠️', '此邮箱未注册！')
         else:
+            if forget_time_global is None or forget_time_global - time.time() > forget_wait:
+                forget_time_global = time.time()
+            else:
+                tkinter.messagebox.showerror('警告⚠️', '你太快了！\n爪巴！')
+                return False
+
             def _format_addr(s):
                 name, addr = parseaddr(s)
                 return formataddr((Header(name, 'utf-8').encode(), addr))
