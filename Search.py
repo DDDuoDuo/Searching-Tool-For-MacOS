@@ -13,7 +13,11 @@ from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 from tkinter import *
 
-if platform.system() == 'Windows': from tkinter.ttk import *
+signup_time_global = None
+forget_time_global = None
+
+if platform.system() == 'Windows':
+    from tkinter.ttk import *
 # from tkinter.ttk import *
 from urllib.parse import quote
 
@@ -236,6 +240,7 @@ def sign_up():
 
     captcha_reg_Frame.pack(anchor="w")
     reg_Button.pack(anchor="w", fill="x")
+
 
 def search():
     def search_res():
