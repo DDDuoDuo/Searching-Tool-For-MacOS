@@ -14,6 +14,8 @@ from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 from tkinter import *
 
+import jieba
+
 signup_time_global = None
 forget_time_global = None
 signup_wait = 60
@@ -268,7 +270,7 @@ def sign_up():
 def search():
     def search_res():
         global url
-        s = var.get()
+        s = " ".join(jieba.cut_for_search(var.get(), HMM=True))
         if s == 'Baidu':
             url = 'https://www.baidu.com/s?ie=UTF-8&wd='
         if s == 'Google':
