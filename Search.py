@@ -91,12 +91,12 @@ def generate(email):
            str(abs(hash(email)))[int(str(abs(hash(email)))[5])]
 
 
-def send():
+def send(_=None):
     window_forgot = Toplevel(window)
     window_forgot.geometry('300x50')
     window_forgot.title('忘记密码')
 
-    def confirm():
+    def confirm(_=None):
         global forget_time_global, password_
         user = database_users()
         emails = list()
@@ -136,13 +136,14 @@ def send():
 
     email_forget_Label = Label(window_forgot, text='邮箱：', )
     email_forget_Entry = Entry(window_forgot)
+    email_forget_Entry.bind("<Return>", confirm)
     forget_Button = Button(window_forgot, text='获取', command=confirm)
-    email_forget_Label.place(x=33, y=15)
-    email_forget_Entry.place(x=75, y=15)
-    forget_Button.place(x=250, y=20)
+    email_forget_Label.pack(side=LEFT)
+    email_forget_Entry.pack(side=LEFT)
+    forget_Button.pack(side=LEFT)
 
 
-def log():
+def log(_=None):
     global login
     user = database_users()
     if username_Entry.get() in user.keys() and pwd_Entry.get() == user[username_Entry.get()][0]:
@@ -163,8 +164,8 @@ def log():
         login = False
 
 
-def sign_up():
-    def confirm():
+def sign_up(_=None):
+    def confirm(_=None):
         user = database_users()
         emails = list()
         for email in user.values():
@@ -199,7 +200,7 @@ def sign_up():
             users.write(username_reg_Entry.get() + '+' + pwd_reg_Entry.get() + '+' + email_reg_Entry.get() + '\n')
             window_sign_up.destroy()
 
-    def get_emts():
+    def get_emts(_=None):
         user = database_users()
         emails = list()
         for email in user.values():
@@ -265,8 +266,11 @@ def sign_up():
 
     captcha_reg_Frame.pack(anchor="w")
     reg_Button.pack(anchor="w", fill="x")
-
-
+    username_reg_Entry.bind("<Return>", confirm)
+    pwd_reg_Entry.bind("<Return>", confirm)
+    pwd_twice_reg_Entry.bind("<Return>", confirm)
+    email_reg_Entry.bind("<Return>", get_emts)
+    captcha_Entry.bind("<Return>", confirm)
 def search():
     def search_res():
         global url
@@ -339,7 +343,8 @@ username_Entry.pack(side=RIGHT)
 username_Label.pack(side=LEFT)
 pwd_Entry.pack(side=RIGHT)
 pwd_Label.pack(side=LEFT)
-
+username_Entry.bind("<Return>", log)
+pwd_Entry.bind("<Return>", log)
 username_Frame.pack()
 pwd_Frame.pack()
 login_and_signup_Frame.pack()
