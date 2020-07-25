@@ -270,7 +270,7 @@ def sign_up():
 def search():
     def search_res():
         global url
-        s = " ".join(jieba.cut_for_search(var.get(), HMM=True))
+        s = var.get()
         if s == 'Baidu':
             url = 'https://www.baidu.com/s?ie=UTF-8&wd='
         if s == 'Google':
@@ -296,7 +296,7 @@ def search():
             url = 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords='
         if s == 'Taobao':
             url = 'https://s.taobao.com/search?q='
-        words = str(search_Entry.get()).split()
+        words = str(" ".join(jieba.cut_for_search(search_Entry.get(), HMM=True))).split()
         for w in words:
             url += w
             if len(words) > 1:
