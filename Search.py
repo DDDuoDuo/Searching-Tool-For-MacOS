@@ -14,7 +14,15 @@ from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 from tkinter import *
 
-# import jieba
+import jieba
+
+smart_search = False
+
+
+def smart_search_setting(_=None):
+    global smart_search
+    smart_search = not smart_search
+
 
 signup_time_global = None
 forget_time_global = None
@@ -272,7 +280,7 @@ def sign_up(_=None):
     email_reg_Entry.bind("<Return>", get_emts)
     captcha_Entry.bind("<Return>", confirm)
 def search():
-    def search_res():
+    def search_res(_=None):
         global url
         s = var.get()
         if s == 'Baidu':
@@ -300,8 +308,10 @@ def search():
             url = 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords='
         if s == 'Taobao':
             url = 'https://s.taobao.com/search?q='
-        # words = str(" ".join(jieba.cut_for_search(search_Entry.get(), HMM=True))).split()
-        words = str(search_Entry.get()).split()
+        if smart_search:
+            words = str(" ".join(jieba.cut_for_search(search_Entry.get(), HMM=True))).split()
+        else:
+            words = str(search_Entry.get()).split()
         for w in words:
             url += w
             if len(words) > 1:
@@ -332,7 +342,13 @@ def search():
     search_Entry.pack()
     search_Button.pack()
     option.pack()
+    search_Entry.bind("<Return>", search_res)
+    menu = Menu(window)
+    special_method = Menu(menu, tearoff=0)
+    menu.add_cascade(label="功能", menu=special_method)
 
+    special_method.add_checkbutton(label="启用智能搜索", command=smart_search_setting)
+    window.config(menu=menu)
 
 login_Button = Button(login_and_signup_Frame, text='登录', command=log)
 pwd_forget_Button = Button(login_and_signup_Frame, text='忘记密码？', command=send)
