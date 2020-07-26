@@ -28,7 +28,6 @@ from urllib.parse import quote
 window = Tk()
 
 
-
 def search():
     def search_res(_=None):
         global url
@@ -102,5 +101,7 @@ def search():
     #
     # special_method.add_checkbutton(label="启用智能搜索", command=smart_search_setting)
     # window.config(menu=menu)
+
+
 search()
 window.mainloop()
