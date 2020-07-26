@@ -16,6 +16,9 @@ from tkinter import *
 
 import jieba
 
+if platform.system() == 'Windows':
+    from tkinter.ttk import *
+
 smart_search = False
 
 
@@ -28,8 +31,7 @@ signup_time_global = None
 forget_time_global = None
 signup_wait = 60
 forget_wait = 60
-if platform.system() == 'Windows':
-    from tkinter.ttk import *
+
 # from tkinter.ttk import *
 from urllib.parse import quote
 
@@ -339,17 +341,19 @@ def search():
                         'Bing(International)', 'Google', 'Taobao',
                         'DuckDuckGo', 'Wikipedia', 'CSDN',
                         'Youtube', 'Facebook', 'Weibo', 'Amazon')
+    smart_search_Checkbutton = Checkbutton(text="智能搜索", command=smart_search_setting)
     search_Entry.pack()
     search_Button.pack()
     option.pack()
+    smart_search_Checkbutton.pack()
     search_Entry.bind("<Return>", search_res)
-    menu = Menu(window)
-    special_method = Menu(menu, tearoff=0)
-    menu.add_cascade(label="功能", menu=special_method)
 
-    special_method.add_checkbutton(label="启用智能搜索", command=smart_search_setting)
-    window.config(menu=menu)
-
+    # menu = Menu(window)
+    # special_method = Menu(menu, tearoff=0)
+    # menu.add_cascade(label="功能", menu=special_method)
+    #
+    # special_method.add_checkbutton(label="启用智能搜索", command=smart_search_setting)
+    # window.config(menu=menu)
 login_Button = Button(login_and_signup_Frame, text='登录', command=log)
 pwd_forget_Button = Button(login_and_signup_Frame, text='忘记密码？', command=send)
 signup_Button = Button(login_and_signup_Frame, text='注册', command=sign_up)
