@@ -12,7 +12,7 @@ from tkinter import *
 
 import jieba
 
-jieba.enable_paddle()
+# jieba.enable_paddle()
 if platform.system() == 'Windows':
     from tkinter.ttk import *
 
