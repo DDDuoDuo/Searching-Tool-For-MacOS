@@ -3,6 +3,8 @@
 # 注册页
 # 忘记密码页
 # 老王牛逼不？
+'''pyinstaller Search.py --add-data="./源码.ico;." -F -w -i 源码.ico'''
+import os
 import platform
 import string
 import webbrowser
@@ -17,6 +19,17 @@ if platform.system() == 'Windows':
 smart_search = False
 
 
+def resource_path(relative_path):
+    '''返回资源绝对路径。'''
+    if hasattr(sys, '_MEIPASS'):
+        # PyInstaller会创建临时文件夹temp
+        # 并把路径存储在_MEIPASS中
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath('.')
+    return os.path.join(base_path, relative_path)
+
+
 def smart_search_setting(_=None):
     global smart_search
     smart_search = not smart_search
@@ -26,6 +39,8 @@ def smart_search_setting(_=None):
 from urllib.parse import quote
 
 window = Tk()
+window.iconbitmap(resource_path(".\\源码.ico"))
+window.title("搜索工具")
 
 
 def search():
