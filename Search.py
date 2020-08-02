@@ -3,7 +3,7 @@
 # 注册页
 # 忘记密码页
 # 老王牛逼不？
-'''pyinstaller Search.py --add-data="./源码.ico;." -F -w -i 源码.ico'''
+"""pyinstaller Search.py --add-data="./源码.ico;." -F -w -i 源码.ico"""
 import os
 import platform
 import string
@@ -20,7 +20,7 @@ smart_search = False
 
 
 def resource_path(relative_path):
-    '''返回资源绝对路径。'''
+    """返回资源绝对路径。"""
     if hasattr(sys, '_MEIPASS'):
         # PyInstaller会创建临时文件夹temp
         # 并把路径存储在_MEIPASS中
