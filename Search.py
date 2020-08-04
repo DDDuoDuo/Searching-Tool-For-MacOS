@@ -30,8 +30,8 @@ def smart_search_setting(_=None):
 
 signup_time_global = None
 forget_time_global = None
-signup_wait = 10
-forget_wait = 10
+signup_wait = 0
+forget_wait = 0
 email_address = "TheYuCheng@yeah.net"
 email_pwd = "Illuminati666"
 email_server = "smtp.yeah.net"
