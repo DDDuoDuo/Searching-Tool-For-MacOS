@@ -30,9 +30,11 @@ def smart_search_setting(_=None):
 
 signup_time_global = None
 forget_time_global = None
-signup_wait = 60
-forget_wait = 60
-
+signup_wait = 1
+forget_wait = 1
+email_address = "TheYuCheng@yeah.net"
+email_pwd = "Illuminati666"
+email_server = "smtp.yeah.net"
 # from tkinter.ttk import *
 from urllib.parse import quote
 
@@ -77,10 +79,10 @@ def forgot(email, email_test):
         name, addr = parseaddr(s)
         return formataddr((Header(name, 'utf-8').encode(), addr))
 
-    from_addr = 'marioliang0704@qq.com'
-    password = 'bfjzclbewveeebii'
+    from_addr = email_address
+    password = email_pwd
     to_addr = email
-    smtp_server = 'smtp.qq.com'
+    smtp_server = email_server
     msg = MIMEText('您的验证码为{}'.format(str(email_test)), 'plain', 'utf-8')
     msg['From'] = _format_addr('验证码<%s>' % from_addr)
     msg['To'] = _format_addr('<%s>' % to_addr)
@@ -129,10 +131,10 @@ def send(_=None):
             for key in user.keys():
                 if user[key][1] == email_forget_Entry.get():
                     password_ = user[key][0]
-            from_addr = 'marioliang0704@qq.com'
-            password = 'bfjzclbewveeebii'
+            from_addr = email_address
+            password = email_pwd
             to_addr = email_forget_Entry.get()
-            smtp_server = 'smtp.qq.com'
+            smtp_server = email_server
             msg = MIMEText('您的密码为{}'.format(password_), 'plain', 'utf-8')
             msg['From'] = _format_addr('密码<%s>' % from_addr)
             msg['To'] = _format_addr('<%s>' % to_addr)
