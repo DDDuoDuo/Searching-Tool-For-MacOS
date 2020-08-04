@@ -30,8 +30,8 @@ def smart_search_setting(_=None):
 
 signup_time_global = None
 forget_time_global = None
-signup_wait = 1
-forget_wait = 1
+signup_wait = 10
+forget_wait = 10
 email_address = "TheYuCheng@yeah.net"
 email_pwd = "Illuminati666"
 email_server = "smtp.yeah.net"
@@ -69,7 +69,7 @@ def database_users():
 
 def forgot(email, email_test):
     global signup_time_global
-    if signup_time_global is None or signup_time_global - time.time() > signup_wait:
+    if (signup_time_global is None) or ((time.time() - signup_time_global) > signup_wait):
         signup_time_global = time.time()
     else:
         tkinter.messagebox.showerror('警告⚠️', '你太快了！\n爪巴！')
@@ -118,7 +118,7 @@ def send(_=None):
         if email_forget_Entry.get() not in emails:
             tkinter.messagebox.showerror('警告⚠️', '此邮箱未注册！')
         else:
-            if forget_time_global is None or forget_time_global - time.time() > forget_wait:
+            if (forget_time_global is None) or ((time.time() - forget_time_global) > forget_wait):
                 forget_time_global = time.time()
             else:
                 tkinter.messagebox.showerror('警告⚠️', '你太快了！\n爪巴！')
